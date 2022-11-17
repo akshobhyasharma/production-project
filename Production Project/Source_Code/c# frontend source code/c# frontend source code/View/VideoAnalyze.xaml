@@ -1,0 +1,266 @@
+﻿<UserControl x:Class="AnalyzeApp.View.VideoAnalyze"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnalyzeApp.View" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:converter="clr-namespace:AnalyzeApp.Converter" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="525" d:DesignWidth="920">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+        <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"></converter:InverseBooleanToVisibilityConverter>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="720"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="0 20 0 0">
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Video Libary" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding NavigateVideoLibrary}"/>
+                <RadioButton Content="Analyze Video" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
+                <RadioButton Content="User Info" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding NavigateUserInfo}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="20" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="412.5"/>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="247.5"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="252.5"/>
+                <RowDefinition Height="115.751"/>
+                <RowDefinition/>
+                <RowDefinition Height="115.751"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Column="0" Grid.RowSpan="2" Margin="0,0,0,19">
+                <Border CornerRadius="10" Margin="0,0,0,47">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#5bc3ff" Offset="0.0"/>
+                            <GradientStop Color="#3aa0ff" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40px"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="40px"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Splice Title" Foreground="White" FontSize="21" Margin="10,5,0,3" Width="135"/>
+                        <MediaElement x:Name="MediaElementUpload" Grid.Row="1"  Grid.RowSpan="1" Source="{Binding VideoPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" LoadedBehavior="Manual" VerticalAlignment="Top" UnloadedBehavior="Manual" Volume="0" MediaOpened="MediaElementUpload_MediaOpened"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,182,0,0">
+                            <Button x:Name="Pause" Width="30" Height="30" Margin="0 0 10 0" Click="Pause_Click" Style="{StaticResource MediaButton2}">
+                                <iconPacks:PackIconMaterial Kind="Pause" Foreground="#3aa0ff" Width="17" RenderTransformOrigin="2.117,2.194" Height="20"/>
+                            </Button>
+                            <Button x:Name="Play" Width="30" Height="30" Click="Play_Click" Margin="0 0 10 0"  Style="{StaticResource MediaButton2}">
+                                <iconPacks:PackIconMaterial Kind="Play" Foreground="#3aa0ff" Width="17" RenderTransformOrigin="2.117,2.194" Height="20"/>
+                            </Button>
+                            <Button x:Name="Stop" Width="30" Height="30" Click="Stop_Click" Style="{StaticResource MediaButton2}">
+                                <iconPacks:PackIconMaterial Kind="Stop" Foreground="#3aa0ff" Width="17" RenderTransformOrigin="2.117,2.194" Height="20"/>
+                            </Button>
+                        </StackPanel>
+                        <Slider x:Name="VideoSlider"  HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="326" ValueChanged="Slider_ValueChanged" DragLeave="VideoSlider_DragLeave" LargeChange="2" IsSnapToTickEnabled="True" IsMoveToPointEnabled="True" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.Row="2" Margin="0,1,0,0" Grid.RowSpan="2">
+                <Border CornerRadius="10" Margin="0,-46,0,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#5bc3ff" Offset="0.0"/>
+                            <GradientStop Color="#3aa0ff" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox Margin="0,32,0,10" ItemsSource="{Binding RecievedVideoCollection}" SelectedItem="{Binding SelectedSplice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="1" Grid.RowSpan="3" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" Foreground="White">
+                                        <Run Text="Name: "></Run>
+                                        <Run Text="{Binding spliceName}"></Run>
+                                        </TextBlock>
+                                        <iconPacks:PackIconMaterial Kind="Video" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.RowSpan="3"></iconPacks:PackIconMaterial>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Grid Grid.Column="1">
+                            <TabControl>
+                                <TabItem Header="Details">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden" >
+                                        <StackPanel Margin="10">
+                                            <TextBlock Margin="0 0 0 2" Foreground="White" FontWeight="DemiBold" FontSize="14" Text="Splice Details">
+                                            </TextBlock>
+                                            <TextBlock Margin="0 0 0 2" Foreground="White" TextWrapping="wrap">                                
+                                <Run>Video:</Run>
+                                <Run Text="{Binding SpliceVideoName}"></Run>
+                                            </TextBlock>
+                                            <TextBlock Margin="0 0 0 2" Foreground="White">
+                                <Run>Start Time:</Run>
+                                <Run Text="{Binding SpliceStartTime}"></Run>
+                                            </TextBlock>
+                                            <TextBlock Margin="0 0 0 2" Foreground="White">
+                                <Run>End Time:</Run>
+                                <Run Text="{Binding SpliceEndTime}"></Run>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </TabItem>
+                                <TabItem Header="Objects">
+                                    <StackPanel Margin="10">
+                                        <TextBlock Text="Objects Detected" FontWeight="DemiBold" FontSize="14" Foreground="White">
+
+                                        </TextBlock>
+                                        <ListBox Margin="0" ItemsSource="{Binding ObjectItems}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding}" Foreground="White"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </StackPanel>
+                                </TabItem>
+                            </TabControl>
+                        </Grid>
+                        <TextBlock Text="Video Splice" TextWrapping="Wrap" Margin="10,3,42,135" Foreground="White" FontSize="15"/>
+                        <Button
+  Style="{StaticResource MaterialDesignIconButton}"
+  Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Margin="179,1,2,113" Cursor="Hand" ToolTip="Open Directory" Command="{Binding OpenDirectory}"> 
+                            <materialDesign:PackIcon
+    Kind="FolderOpen" />
+
+                        </Button>
+                    </Grid>
+
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Margin="20,0,0,20">
+                <Border CornerRadius="10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                            <GradientStop Color="#4eff91" Offset="0.0"/>
+                            <GradientStop Color="#3aa0ff" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Video Selector" Foreground="White" FontSize="21" Margin="15,6,0,166" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+                        <ListBox ItemsSource="{Binding VideoCollection}" SelectedItem="{Binding SelectedVideo, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,11,0,0" Grid.RowSpan="2">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="DemiBold" FontSize="14">
+                                        <Run Text="Name: "></Run>
+                                        <Run Text="{Binding VideoName}"></Run>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="1" Grid.Row="1">
+                                        <Run Text="Date:"></Run>
+                                        <Run Text="{Binding videoTime}"></Run>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="1" Grid.Row="2">
+                                        <Run Text="Location:"></Run>
+                                        <Run Text="{Binding VideoLocation}"></Run>
+                                        </TextBlock>
+                                        <iconPacks:PackIconMaterial Kind="Video" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.RowSpan="3"></iconPacks:PackIconMaterial>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.RowSpan="4" Margin="20,252,0,0" Grid.ColumnSpan="2">
+                <Border CornerRadius="10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                            <GradientStop Color="#4eff91" Offset="0.0"/>
+                            <GradientStop Color="#3aa0ff" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Width="252" Height="170" Margin="0 10 0 0">
+                            <TabItem Header="Objects">
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left">
+                                    <CheckBox Foreground="White" Margin="0 0 0 5" IsChecked="{Binding Path=CarChecked, Mode=TwoWay}" >Car</CheckBox>
+                                    <CheckBox Foreground="White" Margin="0 0 0 5" IsChecked="{Binding Path=BikeChecked, Mode=TwoWay}">Motorcycle</CheckBox>
+                                    <CheckBox Foreground="White" Margin="0 0 0 5" IsChecked="{Binding Path=BusChecked, Mode=TwoWay}">Bus</CheckBox>
+                                    <CheckBox Foreground="White" Margin="0 0 0 5" IsChecked="{Binding Path=PersonChecked, Mode=TwoWay}">Person</CheckBox>
+                                    <CheckBox Foreground="White" Margin="0 0 0 5" IsChecked="{Binding Path=TruckChecked, Mode=TwoWay}">Truck</CheckBox>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Detection">
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left">
+                                    <RadioButton Margin="0 5 0 0" GroupName="Speed" Foreground="White" IsChecked="{Binding DetailedChecked, Mode=TwoWay}">Detailed</RadioButton>
+                                    <RadioButton Margin="0 5 0 0" GroupName="Speed" Foreground="White" IsChecked="{Binding AverageChecked, Mode=TwoWay}">Average</RadioButton>
+                                    <RadioButton Margin="0 5 0 0" GroupName="Speed" Foreground="White" IsChecked="{Binding QuickChecked, Mode=TwoWay}">Quick</RadioButton>
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
+                        <StackPanel Margin="10 10 0 0" Grid.Row="1" Orientation="Horizontal">
+                            <Button HorizontalAlignment="Left" Command="{Binding SpliceVideo}" Click="Button_Click">Analyze</Button>
+                            <TextBlock Margin="10 0 0 0 " VerticalAlignment="Center" Text="{Binding SpliceMessage}"></TextBlock>
+                            <ProgressBar
+  Style="{StaticResource MaterialDesignCircularProgressBar}"
+  Value="35"
+  IsIndeterminate="True" Margin="20 0 0 0" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                    </Grid>
+                </Border>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

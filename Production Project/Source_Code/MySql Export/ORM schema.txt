@@ -1,0 +1,28 @@
+class Video(dBase.Model):
+    __tablename__ = 'video'
+    VideoID = dBase.Column(dBase.Integer, primary_key=True)
+    VideoName = dBase.Column(dBase.String(40), nullable=False)
+    VideoPath = dBase.Column(dBase.String(40), nullable=False)
+    VideoApproval = dBase.Column(dBase.Integer, nullable=False)
+    VideoLocation = dBase.Column(dBase.String(40), nullable=False)
+    VideoDate = dBase.Column(dBase.DateTime, nullable=False)
+    UserID = dBase.Column(dBase.Integer, ForeignKey(
+        'user.UserID', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+    __table_args__ = (dBase.UniqueConstraint('VideoName', name='u_videoname'),)
+
+
+class User(dBase.Model):
+    __tablename__ = 'user'
+    UserID = dBase.Column(dBase.Integer, primary_key=True)
+    UserName = dBase.Column(dBase.String(30), nullable=False)
+    UserEmail = dBase.Column(dBase.String(30), nullable=False)
+    UserPassword = dBase.Column(dBase.String(30), nullable=False)
+    UserRole = dBase.Column(dBase.String(8), nullable=False)
+    AccountStatus = dBase.Column(dBase.Integer, nullable=False)
+    fkVideoUser = dBase.relationship(
+        'Video', backref='user')
+    __table_args__ = (dBase.UniqueConstraint(
+        'UserName', 'UserEmail', name='u_username_email'),)
+
+
+dBase.create_all()

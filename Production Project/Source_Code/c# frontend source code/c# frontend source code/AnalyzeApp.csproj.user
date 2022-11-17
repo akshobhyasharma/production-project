@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ShowAllFiles>true</ShowAllFiles>
+    <_LastSelectedProfileId>C:\Users\LENOVO\source\repos\AnalyzeApp\AnalyzeApp\Properties\PublishProfiles\ClickOnceProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Components\BindablePasswordBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\BindablePasswordBoxUserInfo.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\IndexView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\UserInformation.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\VideoAnalyze.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\VideoLibrary.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Components\BindablePasswordBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\BindablePasswordBoxUserInfo.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\CustomTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\MenuTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\IndexView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UserInformation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\VideoAnalyze.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\VideoLibrary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

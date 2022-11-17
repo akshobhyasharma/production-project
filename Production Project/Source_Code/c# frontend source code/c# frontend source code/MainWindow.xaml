@@ -1,0 +1,76 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnalyzeApp"
+        xmlns:viewModel ="clr-namespace:AnalyzeApp.ViewModel"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" x:Class="AnalyzeApp.MainWindow"
+             xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    
+        mc:Ignorable="d"
+        Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True" MouseDown="Window_MouseDown">
+    <Border>
+        <Border.Background>
+            <LinearGradientBrush Opacity="0.97" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#272537" Offset="0.0"/>
+                <GradientStop Color="#FF5AC3DD" Offset="1"/>
+            </LinearGradientBrush>
+
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image Margin="10,14,0,0" Stretch="Fill" Source="/Resource/Image/index3.jpg" Grid.ColumnSpan="2" Grid.RowSpan="2" Opacity="0.7">
+                <Image.Effect>
+                    <BlurEffect Radius="30"></BlurEffect>
+                </Image.Effect>
+            </Image>
+            <TextBlock Text="SplicerAI" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="29"/>
+
+            <ContentControl Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Content="{Binding currentViewModel}"/>
+            <StackPanel Grid.Column="2" Width="120" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 80 0" Visibility="{Binding IsLogged , Converter={StaticResource BooleanToVisibilityConverter}}">
+                <materialDesign:Card UniformCornerRadius="2" Background="#073687" Visibility="Visible" Width="120">
+                    <Menu
+    materialDesign:MenuAssist.TopLevelMenuItemHeight="28" Foreground="White" Background="Transparent" BorderBrush="#073687" Width="120"/>
+                </materialDesign:Card>
+            </StackPanel>
+            <Ellipse Width="25px" ToolTip="Close" Grid.Row="0" Margin="681,10,14,40" MouseLeftButtonDown="PackIconMaterial_MouseLeftButtonDown" Height="25px" Grid.Column="1" Cursor="Hand">
+                <Ellipse.Fill>
+                    <LinearGradientBrush StartPoint="1,0" Opacity="0.98" EndPoint="0,1">
+                        <GradientStop Color="silver" Offset="0.0"/>
+                        <GradientStop Color="black" Offset="1"/>
+                    </LinearGradientBrush>
+                </Ellipse.Fill>
+                <Ellipse.Effect>
+                    <DropShadowEffect ShadowDepth="4" Opacity="0.4" Direction="270" Color="Gray" BlurRadius="8"/>
+                </Ellipse.Effect>
+            </Ellipse>
+            <iconPacks:PackIconMaterial Grid.Row="0" Grid.Column="1" Kind="Power" Foreground="White" Width="15" Cursor="Hand" MouseLeftButtonDown="PackIconMaterial_MouseLeftButtonDown" Margin="686,14,0,0"/>
+            <Ellipse Width="25px" ToolTip="Minimize" Grid.Row="0" Margin="644,10,51,40" MouseLeftButtonDown="PackIconMaterial_MouseLeftButtonDown2" Height="25px" Grid.Column="1" Cursor="Hand">
+                <Ellipse.Fill>
+                    <LinearGradientBrush StartPoint="1,0" Opacity="0.98" EndPoint="0,1">
+                        <GradientStop Color="silver" Offset="0.0"/>
+                        <GradientStop Color="black" Offset="1"/>
+                    </LinearGradientBrush>
+                </Ellipse.Fill>
+                <Ellipse.Effect>
+                    <DropShadowEffect ShadowDepth="4" Opacity="0.4" Direction="270" Color="Gray" BlurRadius="8"/>
+                </Ellipse.Effect>
+            </Ellipse>
+            <iconPacks:PackIconMaterial Grid.Row="0" Grid.Column="1" Kind="WindowMinimize" Foreground="White" Width="15" Cursor="Hand" MouseLeftButtonDown="PackIconMaterial_MouseLeftButtonDown2" Margin="649,14,0,0"/>
+
+        </Grid>
+    </Border>
+</Window>

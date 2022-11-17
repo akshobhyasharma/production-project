@@ -1,0 +1,210 @@
+﻿<UserControl x:Class="AnalyzeApp.View.VideoLibrary"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnalyzeApp.View" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:vm="clr-namespace:AnalyzeApp.ViewModel"
+             xmlns:view="clr-namespace:AnalyzeApp.View"
+             xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+            d:DesignHeight="525" d:DesignWidth="920">
+    <Grid>
+        <materialDesign:DialogHost x:Name="UpdateDialog" OverlayBackground="Transparent">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Width="300" Height="230" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Video" Foreground="{StaticResource PrimaryHueMidBrush}" Width="50" Height="50"/>
+                            <TextBlock Text="Update Video" FontSize="20" FontWeight="SemiBold" Margin="20 0 0 0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Margin="35 10 35 0">
+                            <TextBox materialDesign:HintAssist.Hint="Video Name" Margin="0 0 0 0" Text="{Binding UpdateName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBox materialDesign:HintAssist.Hint="Video Location" Margin="0 10 0 0" Text="{Binding UpdateLocation, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+                            <TextBlock Text="{Binding UpdateMessage}"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15">
+                        <Button VerticalAlignment="Center" Content="Update" Margin="0 0 10 0" Command="{Binding UpdateVideoCommand}"/>
+                        <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" VerticalAlignment="Center" Content="Cancel"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="720"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Margin="0 20 0 0">
+                <StackPanel Grid.Row="1">
+                    <RadioButton Content="Video Libary" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" IsChecked="True"></RadioButton>
+                    <RadioButton Content="Analyze Video" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding NavigateVideoAnalyze}"/>
+                    <RadioButton Content="User Info" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding NavigateUserInfo}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Margin="20" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="412.5"/>
+                    <ColumnDefinition Width="20"></ColumnDefinition>
+                    <ColumnDefinition Width="247.5"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="232.5"/>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="232.5"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Column="0" Grid.RowSpan="3">
+                    <Border CornerRadius="10">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#5bc3ff" Offset="0.0"/>
+                                <GradientStop Color="#3aa0ff" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Video List" Foreground="White" FontSize="24" Margin="0 5 0 0" >
+                        </TextBlock>
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <ListBox Height="353" ItemsSource="{Binding VideoCollection}" SelectedItem="{Binding SelectedVideo, UpdateSourceTrigger=PropertyChanged}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="1" Grid.Row="0" FontWeight="DemiBold" FontSize="14">
+                                        <Run Text="Name: "></Run>
+                                        <Run Text="{Binding VideoName}"></Run>
+                                            </TextBlock>
+                                            <TextBlock Grid.Column="1" Grid.Row="1">
+                                        <Run Text="Date:"></Run>
+                                        <Run Text="{Binding videoTime}"></Run>
+                                            </TextBlock>
+                                            <TextBlock Grid.Column="1" Grid.Row="2">
+                                        <Run Text="Location:"></Run>
+                                        <Run Text="{Binding VideoLocation}"></Run>
+                                            </TextBlock>
+                                            <iconPacks:PackIconMaterial Kind="Video" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.RowSpan="3"></iconPacks:PackIconMaterial>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                                <TextBlock Text="{Binding DelUpdateMsg}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                                <Button Margin="0 0 20 0" FontSize="18" Command="{Binding DeleteVideoCommand}">Delete</Button>
+                                <Button FontSize="18" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                        CommandTarget="{Binding ElementName=UpdateDialog}" Content="Edit">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding EditVideoCommand}"
+                                        />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="2" Grid.Row="0">
+                    <Border CornerRadius="10">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                                <GradientStop Color="#4eff91" Offset="0.0"/>
+                                <GradientStop Color="#3aa0ff" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="30"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="40"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Video Preview" Foreground="White" FontSize="24" Margin="0 5 0 0" >
+                            </TextBlock>
+                            <MediaElement x:Name="MediaElementUpload" Grid.ColumnSpan="3" Grid.RowSpan="3" LoadedBehavior="Play" Stretch="Uniform" StretchDirection="DownOnly" UnloadedBehavior="Manual" Volume="0" Source="{Binding VideoPlayerPath}"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                <Button x:Name="Pause" Width="30" Height="30" Margin="0 0 10 0" Click="Pause_Click" Style="{StaticResource MediaButton}">
+                                    <iconPacks:PackIconMaterial Kind="Pause" Foreground="#3aa0ff" Width="17" RenderTransformOrigin="2.117,2.194" Height="20"/>
+                                </Button>
+                                <Button x:Name="Play" Width="30" Height="30" Click="Play_Click" Margin="0 0 10 0"  Style="{StaticResource MediaButton}">
+                                    <iconPacks:PackIconMaterial Kind="Play" Foreground="#3aa0ff" Width="17" RenderTransformOrigin="2.117,2.194" Height="20"/>
+                                </Button>
+                                <Button x:Name="Stop" Width="30" Height="30" Click="Stop_Click" Style="{StaticResource MediaButton}">
+                                    <iconPacks:PackIconMaterial Kind="Stop" Foreground="#3aa0ff" Width="17" RenderTransformOrigin="2.117,2.194" Height="20"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Column="2" Grid.Row="2">
+                    <Border CornerRadius="10">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                <GradientStop Color="#4eff91" Offset="0.0"/>
+                                <GradientStop Color="#3aa0ff" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid Margin="30 0">
+                            <StackPanel>
+                                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Upload Video" Foreground="White" FontSize="24" Margin="0 5 0 0"/>
+                                <TextBox materialDesign:HintAssist.Hint="Video Name" Margin="0 10 0 0" Text="{Binding VideoName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <TextBox materialDesign:HintAssist.Hint="Video Location" Margin="0 10 0 0" Text="{Binding VideoLocation, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="VideoPathTextbox" materialDesign:HintAssist.Hint="Video Path" Margin="0 10 0 0" Text="{Binding VideoPath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                    <iconPacks:PackIconMaterial Kind="Folder" Grid.Column="1" VerticalAlignment="Bottom" Width="30" Margin="5 0 0 0" Height="25" Cursor="Hand" MouseDown="PackIconMaterial_MouseLeftButtonUp"
+                                                                ToolTip="Select File"/>
+                                </Grid>
+                                <TextBlock Margin="0 10 0 0" Text="{Binding ValidationMessageUpload}"/>
+                                <StackPanel Orientation="Horizontal" Margin="0 20 0 0" HorizontalAlignment="Center">
+                                    <Button Command="{Binding UploadVideoCommand}">Upload</Button>
+                                    <Button Margin="10 0 0 0" Command="{Binding PreviewVideoCommand}">Preview</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
