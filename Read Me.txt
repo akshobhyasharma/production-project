@@ -1,0 +1,14 @@
+The repository represents the source code for my final year project for BsC(Bachelors in Computing) through Leeds Beckett University.
+
+There are 3 different folders inside the repository:
+
+1. C# frontend source code
+- This source code is meant to complie into a wpf front end client that allows a user to carry out various functionalities.
+
+2. flask Backend
+- This source code is meant to be a service that carries out various processes to give the users a desire result.
+
+3. MySql Export
+- These folders have schema files that represent the database schema that the project relies on to manage its data.
+
+These are just a brief summary of the codes found in the folders. The detailed functionalities are described in the word file.
